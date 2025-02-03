@@ -1,6 +1,6 @@
 'use strict';
 
-// Selecting Elements
+// SELECTING ELEMENTS
 // of course we can select elements by
 // using queryselect
 const header = document.querySelector('.header');
@@ -14,12 +14,13 @@ console.log(document.body);
 // We can select elements by using .getElementByID, byTagName, byClassName
 document.getElementById('section--1');
 
+// Elements selected with by TagsName are more dynamic
 const allButtons = document.getElementsByTagName('button');
 console.log(allButtons);
 
 console.log(document.getElementsByClassName('btn'));
 
-// Creating and inserting elements
+// CREATING AND INSERTING ELEMENTS
 const message = document.createElement('div');
 message.classList.add('cookie-message');
 message.innerHTML =
@@ -39,3 +40,12 @@ header.before(message);
 
 // After add element after header element
 header.after(message);
+
+// DELETING ELEMENTS
+// we can do it using .remove()
+
+document
+  .querySelector('.btn-close-cookie')
+  .addEventListener('click', function () {
+    message.remove();
+  });
