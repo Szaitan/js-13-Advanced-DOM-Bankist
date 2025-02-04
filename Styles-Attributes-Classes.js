@@ -50,3 +50,4 @@ logo.classList.add('C');
 logo.classList.remove('C');
 logo.classList.toggle('C');
 logo.classList.contains('C');
+asd;
