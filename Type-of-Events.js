@@ -3,6 +3,8 @@
 const h1 = document.querySelector('h1');
 
 // we have many diffrent event hanndlers
+// More info:
+// https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseenter_event
 // For example
 
 const alerH1 = function (e) {
