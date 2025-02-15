@@ -66,7 +66,7 @@ btnScroll.addEventListener('click', function (e) {
   // To move to specific location of element in our document we can use:
   // window.scrollTo
   // We have to remmeber that that if we move our scroll down or any direction
-  // we have to add the diostance between scroll and top of webstie to distnace between element
+  // we have to add the distance between scroll and top of webstie to distnace between element
   // and top of website.
   // window.scrollTo(
   //   section1.getBoundingClientRect().left + window.scrollX,
