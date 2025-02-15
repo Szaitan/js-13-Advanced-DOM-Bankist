@@ -83,3 +83,58 @@ btnScroll.addEventListener('click', function (e) {
   // New way to scrollTo
   section1.scrollIntoView({ behavior: 'smooth' });
 });
+
+// This both solutions are not perfect if the number of elements with event listner would be to big
+// Solution 1
+// const navLinks = document.querySelectorAll('.nav__item');
+// [...navLinks].forEach(function (link) {
+//   const href = link.firstElementChild.getAttribute('href');
+//   const hrefSplit = href.split('#');
+//   if (hrefSplit[1]) {
+//     const section = document.querySelector(`#${hrefSplit[1]}`);
+//     link.addEventListener('click', function (e) {
+//       e.preventDefault();
+//       window.scrollTo({
+//         left: section.getBoundingClientRect().left + window.scrollX,
+//         top: section.getBoundingClientRect().top + window.scrollY,
+//         behavior: 'smooth',
+//       });
+//     });
+//   }
+// });
+
+// Solution 2
+// const navLinks = document.querySelectorAll('.nav__link');
+// [...navLinks].forEach(function (item) {
+//   if (item.getAttribute('href') != '#') {
+//     const section = document.querySelector(`${item.getAttribute('href')}`);
+//     item.addEventListener('click', function (e) {
+//       e.preventDefault();
+//       window.scrollTo({
+//         left: section.getBoundingClientRect().left + window.scrollX,
+//         top: section.getBoundingClientRect().top + window.scrollY,
+//         behavior: 'smooth',
+//       });
+//     });
+//   }
+// });
+
+// Event delegation can help us with this.
+// Its is made through two steps:
+// 1) Add event listener to common parent Element
+// 2) Determine what element originated the event
+
+const navLinks = document.querySelector('.nav__links');
+
+navLinks.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  // Matching strategy
+  if (
+    e.target.classList.contains('nav__link') &&
+    e.target.getAttribute('href').length > 2
+  ) {
+    const id = e.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
+});
