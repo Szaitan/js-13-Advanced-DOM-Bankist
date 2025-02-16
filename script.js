@@ -140,3 +140,26 @@ navLinks.addEventListener('click', function (e) {
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
 });
+
+// Tabbed Commponenet
+// My solution
+const tabParent = document.querySelector('.operations__tab-container');
+const tabElements = document.querySelectorAll('.operations__tab');
+const tabContainers = document.querySelectorAll('.operations__content');
+
+tabParent.addEventListener('click', function (e) {
+  if (e.target.classList.contains('operations__tab')) {
+    tabElements.forEach(function (ele, i) {
+      if (ele.classList.contains('operations__tab--active')) {
+        ele.classList.toggle('operations__tab--active');
+        tabContainers[i].classList.remove('operations__content--active');
+      }
+    });
+    e.target.classList.add('operations__tab--active');
+    // getting data from unofficial dataset
+    const operationsContentNum = e.target.dataset.tab;
+    tabContainers[operationsContentNum - 1].classList.add(
+      'operations__content--active'
+    );
+  }
+});
