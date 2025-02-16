@@ -134,6 +134,8 @@ navLinks.addEventListener('click', function (e) {
     e.target.classList.contains('nav__link') &&
     e.target.getAttribute('href').length > 2
   ) {
+    console.log(this);
+    console.log(e.target);
     const id = e.target.getAttribute('href');
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
