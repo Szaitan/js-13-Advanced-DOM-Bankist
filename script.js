@@ -163,3 +163,24 @@ tabParent.addEventListener('click', function (e) {
     );
   }
 });
+
+// Hover over navbar
+// My solution
+const nav = document.querySelector('.nav');
+nav.addEventListener('mouseover', function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    [...navLinks.querySelectorAll('.nav__link')].forEach(function (ele) {
+      ele.style.opacity = 0.5;
+    });
+    nav.children[0].style.opacity = 0.5;
+    e.target.style.opacity = 1;
+  }
+  nav.addEventListener('mouseout', function (e) {
+    if (e.target.classList.contains('nav__link')) {
+      [...navLinks.querySelectorAll('.nav__link')].forEach(function (ele) {
+        ele.style.opacity = 1;
+      });
+      nav.children[0].style.opacity = 1;
+    }
+  });
+});
