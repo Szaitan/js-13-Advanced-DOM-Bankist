@@ -186,3 +186,15 @@ const handleHover = function (e) {
 // Bind allows us to change 'this' to diffrent value
 nav.addEventListener('mouseover', handleHover.bind(0.5));
 nav.addEventListener('mouseout', handleHover.bind(1));
+
+// Sticky navigation
+// We can achive it using scroll event but its bad for performance
+// Bad Solution
+// const sectioOnePosition = section1.getBoundingClientRect();
+// window.addEventListener('scroll', function () {
+//   console.log(sectioOnePosition.top);
+//   if (window.scrollY > sectioOnePosition.top) nav.classList.add('sticky');
+//   else nav.classList.remove('sticky');
+// });
+
+// Better Solution
