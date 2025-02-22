@@ -166,6 +166,7 @@ tabParent.addEventListener('click', function (e) {
 
 // Hover over navbar
 // My solution
+// thats how we can pass argument into event handler using bind
 const nav = document.querySelector('.nav');
 
 const handleHover = function (e) {
@@ -173,15 +174,15 @@ const handleHover = function (e) {
     const link = e.target;
     const siblings = link.closest('.nav').querySelectorAll('.nav__link');
     const logo = link.closest('.nav').querySelector('.nav__logo');
-    console.log(siblings);
     // Important fact
-    // To pass bind value we have to sue arrow function
-    // Arrow function has diffrent 'this' than normal
+    // To pass bind value we have to use arrow function or set this value outside loop in other variable
+    // Arrow function does not own 'this'
     [...siblings].forEach(ele => {
       if (ele !== link) ele.style.opacity = this;
     });
     logo.style.opacity = this;
   }
 };
+// Bind allows us to change 'this' to diffrent value
 nav.addEventListener('mouseover', handleHover.bind(0.5));
 nav.addEventListener('mouseout', handleHover.bind(1));
