@@ -197,4 +197,33 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 //   else nav.classList.remove('sticky');
 // });
 
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // Better Solution
+// Sticky navigation: Intersection Observer API
+const headerBox = document.querySelector('.header');
+
+// Here we set the function for observer when the threshold will be passed
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  console.log(entry);
+  if (!entry.isIntersecting) {
+    nav.classList.add('sticky');
+  } else {
+    nav.classList.remove('sticky');
+  }
+};
+
+// Here we seet options for our observer
+const StickyNavOptions = {
+  root: null,
+  // We set to one so if the view is not 100% of the element it will set navbar to sticky
+  threshold: 0,
+  // RootMargin allows us to set up navbar earlier by the margin distance of it.
+  // We use the atribute of nav by using getBound... height to
+  // use it on diffrent viewpoints
+  rootMargin: `-${nav.getBoundingClientRect().height}px`,
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, StickyNavOptions);
+// Here we select which element should be observed
+headerObserver.observe(headerBox);
