@@ -205,7 +205,6 @@ const headerBox = document.querySelector('.header');
 // Here we set the function for observer when the threshold will be passed
 const stickyNav = function (entries) {
   const [entry] = entries;
-  console.log(entry);
   if (!entry.isIntersecting) {
     nav.classList.add('sticky');
   } else {
@@ -227,3 +226,26 @@ const StickyNavOptions = {
 const headerObserver = new IntersectionObserver(stickyNav, StickyNavOptions);
 // Here we select which element should be observed
 headerObserver.observe(headerBox);
+
+// !!!
+// Intersection observer API for Multiple Sections
+const allSections = document.querySelectorAll('.section');
+
+const revealSection = function (entry, observer) {
+  const [ent] = entry;
+  if (ent.isIntersecting === false) return;
+  ent.target.classList.remove('section--hidden');
+  // For better performance we can remove observed element with use of observer
+  observer.unobserve(ent.target);
+};
+
+const sectionsObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
+
+// Seeting oberser for all section elements
+allSections.forEach(function (sect) {
+  sect.classList.add('section--hidden');
+  sectionsObserver.observe(sect);
+});
