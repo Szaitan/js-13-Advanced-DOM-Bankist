@@ -231,12 +231,15 @@ headerObserver.observe(headerBox);
 // Intersection observer API for Multiple Sections
 const allSections = document.querySelectorAll('.section');
 
-const revealSection = function (entry, observer) {
-  const [ent] = entry;
-  if (ent.isIntersecting === false) return;
-  ent.target.classList.remove('section--hidden');
-  // For better performance we can remove observed element with use of observer
-  observer.unobserve(ent.target);
+const revealSection = function (entries, observer) {
+  entries.forEach(function (entry) {
+    console.log(entries);
+    if (entry.isIntersecting) {
+      entry.target.classList.remove('section--hidden');
+      // For better performance we can remove observed element with use of observer
+      observer.unobserve(entry.target);
+    }
+  });
 };
 
 const sectionsObserver = new IntersectionObserver(revealSection, {
