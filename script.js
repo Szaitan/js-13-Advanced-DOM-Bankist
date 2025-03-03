@@ -253,14 +253,17 @@ allSections.forEach(function (sect) {
 });
 
 // Lazy loading images
-const allFeatures = document.querySelectorAll('.features__img');
+const allFeatures = document.querySelectorAll('img[data-src]');
 
 const loadImage = function (entries, observer) {
   entries.forEach(function (entry) {
     if (entry.isIntersecting) {
-      const src = entry.target.getAttribute('src').replace('-lazy', '');
-      entry.target.src = src;
-      entry.target.classList.remove('lazy-img');
+      // const src = entry.target.getAttribute('src').replace('-lazy', '');
+      entry.target.src = entry.target.dataset.src;
+      // It's important to add eventlistener to the entry with "load", so it will only show full img after it is load. its crucial in case of slow internet.
+      entry.target.addEventListener('load', function () {
+        entry.target.classList.remove('lazy-img');
+      });
       observer.unobserve(entry.target);
     }
   });
