@@ -233,7 +233,6 @@ const allSections = document.querySelectorAll('.section');
 
 const revealSection = function (entries, observer) {
   entries.forEach(function (entry) {
-    console.log(entries);
     if (entry.isIntersecting) {
       entry.target.classList.remove('section--hidden');
       // For better performance we can remove observed element with use of observer
@@ -251,4 +250,27 @@ const sectionsObserver = new IntersectionObserver(revealSection, {
 allSections.forEach(function (sect) {
   sect.classList.add('section--hidden');
   sectionsObserver.observe(sect);
+});
+
+// Lazy loading images
+const allFeatures = document.querySelectorAll('.features__img');
+
+const loadImage = function (entries, observer) {
+  entries.forEach(function (entry) {
+    if (entry.isIntersecting) {
+      const src = entry.target.getAttribute('src').replace('-lazy', '');
+      entry.target.src = src;
+      entry.target.classList.remove('lazy-img');
+      observer.unobserve(entry.target);
+    }
+  });
+};
+
+const featuresObserver = new IntersectionObserver(loadImage, {
+  root: null,
+  threshold: 0.15,
+});
+
+allFeatures.forEach(function (feat) {
+  featuresObserver.observe(feat);
 });
