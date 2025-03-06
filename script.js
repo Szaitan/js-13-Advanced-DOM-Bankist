@@ -277,3 +277,36 @@ const featuresObserver = new IntersectionObserver(loadImage, {
 allFeatures.forEach(function (feat) {
   featuresObserver.observe(feat);
 });
+
+// Slider
+const slider = document.querySelector('.slider');
+const slides = document.querySelectorAll('.slide');
+console.log(slides);
+const slidesStartPosition = [0, 100, 200];
+slides.forEach(function (ele, i) {
+  ele.style.transform = `translateX(${slidesStartPosition[i]}%)`;
+});
+let counterSlides = 0;
+
+slider.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  if (e.target.classList.contains('slider__btn')) {
+    const direction = e.target.classList.contains('slider__btn--right')
+      ? 1
+      : -1;
+    if (
+      counterSlides + direction >= 0 &&
+      counterSlides + direction < slides.length
+    ) {
+      counterSlides += direction;
+
+      slides.forEach(function (slide) {
+        const slideTranslateX = Number(slide.style.transform.match(/-?\d+/)[0]);
+        slide.style.transform = `translateX(${
+          slideTranslateX - direction * 100
+        }%)`;
+      });
+    }
+  }
+});
