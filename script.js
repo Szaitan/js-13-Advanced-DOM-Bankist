@@ -282,9 +282,8 @@ allFeatures.forEach(function (feat) {
 const slider = document.querySelector('.slider');
 const slides = document.querySelectorAll('.slide');
 console.log(slides);
-const slidesStartPosition = [0, 100, 200];
 slides.forEach(function (ele, i) {
-  ele.style.transform = `translateX(${slidesStartPosition[i]}%)`;
+  ele.style.transform = `translateX(${100 * i}%)`;
 });
 let counterSlides = 0;
 
@@ -295,18 +294,20 @@ slider.addEventListener('click', function (e) {
     const direction = e.target.classList.contains('slider__btn--right')
       ? 1
       : -1;
-    if (
-      counterSlides + direction >= 0 &&
-      counterSlides + direction < slides.length
-    ) {
-      counterSlides += direction;
 
-      slides.forEach(function (slide) {
-        const slideTranslateX = Number(slide.style.transform.match(/-?\d+/)[0]);
-        slide.style.transform = `translateX(${
-          slideTranslateX - direction * 100
-        }%)`;
-      });
+    // Aktualizacja indeksu slajdu
+    counterSlides += direction;
+
+    // Obsługa przejścia na pierwszy lub ostatni slajd
+    if (counterSlides < 0) {
+      counterSlides = slides.length - 1;
+    } else if (counterSlides >= slides.length) {
+      counterSlides = 0;
     }
+
+    // Przesunięcie slajdów
+    slides.forEach((ele, i) => {
+      ele.style.transform = `translateX(${100 * (i - counterSlides)}%)`;
+    });
   }
 });
