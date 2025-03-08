@@ -286,14 +286,24 @@ slides.forEach(function (ele, i) {
   ele.style.transform = `translateX(${100 * i}%)`;
 });
 let counterSlides = 0;
+let direction = 0;
+
+const goToSlide = function () {
+  slides.forEach((ele, i) => {
+    console.log('test');
+    ele.style.transform = `translateX(${100 * (i - counterSlides)}%)`;
+  });
+};
+
+const settingDirection = function (e) {
+  direction = e.target.classList.contains('slider__btn--right') ? 1 : -1;
+};
 
 slider.addEventListener('click', function (e) {
   e.preventDefault();
 
   if (e.target.classList.contains('slider__btn')) {
-    const direction = e.target.classList.contains('slider__btn--right')
-      ? 1
-      : -1;
+    settingDirection(e);
 
     // Aktualizacja indeksu slajdu
     counterSlides += direction;
@@ -306,8 +316,26 @@ slider.addEventListener('click', function (e) {
     }
 
     // Przesunięcie slajdów
-    slides.forEach((ele, i) => {
-      ele.style.transform = `translateX(${100 * (i - counterSlides)}%)`;
-    });
+    goToSlide();
   }
+});
+
+// Arrow Slider
+document.addEventListener('keydown', function (e) {
+  e.preventDefault();
+  if (e.key === 'ArrowLeft') {
+    direction = -1;
+  } else if (e.key === 'ArrowRight') {
+    direction = 1;
+  }
+  counterSlides += direction;
+
+  if (counterSlides < 0) {
+    counterSlides = slides.length - 1;
+  } else if (counterSlides >= slides.length) {
+    counterSlides = 0;
+  }
+  console.log(counterSlides);
+
+  goToSlide();
 });
