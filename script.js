@@ -301,6 +301,7 @@ createDots();
 const allDots = document.querySelectorAll('.dots__dot');
 allDots[0].classList.add('dots__dot--active');
 
+// Funkcja do przechodzenia miedzy sjaldami
 const goToSlide = function () {
   // Obsługa przejścia na pierwszy lub ostatni slajd
   if (counterSlides < 0) {
@@ -313,6 +314,7 @@ const goToSlide = function () {
     ele.style.transform = `translateX(${100 * (i - counterSlides)}%)`;
   });
   console.log([...allDots]);
+  // Ustawiania aktywnego slajdu na dotcie
   [...allDots].forEach((dot, _) => dot.classList.remove('dots__dot--active'));
   [...allDots][counterSlides].classList.add('dots__dot--active');
 };
