@@ -134,8 +134,6 @@ navLinks.addEventListener('click', function (e) {
     e.target.classList.contains('nav__link') &&
     e.target.getAttribute('href').length > 2
   ) {
-    console.log(this);
-    console.log(e.target);
     const id = e.target.getAttribute('href');
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
@@ -281,61 +279,78 @@ allFeatures.forEach(function (feat) {
 // Slider
 const slider = document.querySelector('.slider');
 const slides = document.querySelectorAll('.slide');
-console.log(slides);
-slides.forEach(function (ele, i) {
-  ele.style.transform = `translateX(${100 * i}%)`;
-});
+const dots = document.querySelector('.dots');
 let counterSlides = 0;
 let direction = 0;
 
+slides.forEach(function (ele, i) {
+  ele.style.transform = `translateX(${100 * i}%)`;
+});
+
+// Dots Creation
+const createDots = function () {
+  slides.forEach(function (_, i) {
+    dots.insertAdjacentHTML(
+      'beforeend',
+      `<button class="dots__dot" data-slide="${i}"></button>`
+    );
+  });
+};
+createDots();
+
+const allDots = document.querySelectorAll('.dots__dot');
+allDots[0].classList.add('dots__dot--active');
+
 const goToSlide = function () {
+  // Obsługa przejścia na pierwszy lub ostatni slajd
+  if (counterSlides < 0) {
+    counterSlides = slides.length - 1;
+  } else if (counterSlides >= slides.length) {
+    counterSlides = 0;
+  }
+
   slides.forEach((ele, i) => {
-    console.log('test');
     ele.style.transform = `translateX(${100 * (i - counterSlides)}%)`;
   });
+  console.log([...allDots]);
+  [...allDots].forEach((dot, _) => dot.classList.remove('dots__dot--active'));
+  [...allDots][counterSlides].classList.add('dots__dot--active');
 };
 
 const settingDirection = function (e) {
   direction = e.target.classList.contains('slider__btn--right') ? 1 : -1;
 };
 
+// Button slidder
 slider.addEventListener('click', function (e) {
   e.preventDefault();
-
   if (e.target.classList.contains('slider__btn')) {
     settingDirection(e);
-
     // Aktualizacja indeksu slajdu
     counterSlides += direction;
-
-    // Obsługa przejścia na pierwszy lub ostatni slajd
-    if (counterSlides < 0) {
-      counterSlides = slides.length - 1;
-    } else if (counterSlides >= slides.length) {
-      counterSlides = 0;
-    }
-
     // Przesunięcie slajdów
     goToSlide();
   }
 });
 
-// Arrow Slider
+// Arrow slider
 document.addEventListener('keydown', function (e) {
   e.preventDefault();
   if (e.key === 'ArrowLeft') {
     direction = -1;
+    counterSlides += direction;
+    goToSlide();
   } else if (e.key === 'ArrowRight') {
     direction = 1;
+    counterSlides += direction;
+    goToSlide();
   }
-  counterSlides += direction;
+});
 
-  if (counterSlides < 0) {
-    counterSlides = slides.length - 1;
-  } else if (counterSlides >= slides.length) {
-    counterSlides = 0;
+// Dots Slider
+dots.addEventListener('click', function (e) {
+  if (e.target.classList.contains('dots__dot')) {
+    counterSlides = Number(e.target.dataset.slide);
+    goToSlide();
   }
-  console.log(counterSlides);
-
-  goToSlide();
 });
