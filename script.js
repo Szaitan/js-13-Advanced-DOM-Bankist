@@ -356,3 +356,10 @@ dots.addEventListener('click', function (e) {
     goToSlide();
   }
 });
+
+//Unload to allow website to ask user before leaving if he is sure about it
+// Dont over use it
+// window.addEventListener('beforeunload', function (e) {
+//   e.preventDefault();
+//   e.returnValue = '';
+// });
